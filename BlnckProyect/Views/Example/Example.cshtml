@@ -4,7 +4,33 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-@Html.AntiForgeryToken()   @*   __RequestVerificationToken  *@
+@Html.Hidden("urlToPostFiles", Url.Action("SaveDeclaracionIva", "CreditoPyme"))
+@Html.AntiForgeryToken()    @*   __RequestVerificationToken  *@
 <h2>Example</h2>
 
+<button class="btn btn-success" id="btn_post">Postear</button>
+
+<script>
+
+    var loader = setInterval(function () {
+
+        if (document.readyState !== "complete") return;
+            clearInterval(loader);
+
+        //inside of this, use $
+        $("#btn_post").click(function () {
+
+            $.post('@Url.Action("Hola", "Example")', { data: "posy" }, function (data) {
+                //do whatever with the response
+                console.log(data);
+            });
+        });
+
+        var token = $('input[name="__RequestVerificationToken"]');
+        token = token.length > 0? token.val(): '';
+
+        console.log(token);
+
+    }, 300);
+
+</script>

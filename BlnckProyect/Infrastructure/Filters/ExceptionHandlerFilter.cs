@@ -21,12 +21,6 @@ namespace BlnckProyect.Infrastructure.Filters
             MyLogger.GetInstance()
                 .Error($"Exception.Message: {error.ExceptionMessage}|Exception.StackTrace: {error.ExceptionStackTrace} \n ControllerName: {error.ControllerName} \n ActionName: {error.ActionName}");
 
-            /*
-            filterContext.ExceptionHandled = true;
-            filterContext.Result = new ViewResult()
-            {
-                ViewName = "Error"
-            }; */
 
             filterContext.ExceptionHandled = true;
             filterContext.Controller.ViewData.Model = error;

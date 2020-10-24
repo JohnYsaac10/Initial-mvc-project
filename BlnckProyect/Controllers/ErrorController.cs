@@ -9,9 +9,10 @@ namespace BlnckProyect.Controllers
     public class ErrorController : Controller
     {
  
-        public ActionResult DetalleError(int id)
+        
+        public ActionResult Error404()
         {
-            return View(id);
+            return View();
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿
+﻿@model BlnckProyect.Models.ErrorHandler.Error
 @{
-    Layout = null;
+    //Layout = null;
 }
 
 <!DOCTYPE html>
@@ -10,7 +10,49 @@
     <title>Error</title>
 </head>
 <body>
-    <div> 
+    <div class="text-center text-danger">
+        Upsss.... Ha ocurrido un Error
     </div>
+    <div type="text" style="display:none" id="ErrorMessage1">@Model.ActionName</div>
+    <div type="text" style="display:none" id="ErrorMessage2">@Model.ControllerName</div>
+    <div type="text" style="display:none" id="ErrorMessage3">@Model.ExceptionMessage</div>
+    <div type="text" style="display:none" id="ErrorMessage4">@Model.ExceptionLogTime.ToString()</div>
+    <div type="text" style="display:none" id="ErrorMessage5">@Model.ExceptionStackTrace</div>
+
+    <input type="text" name="name" value="" id="hola" />
+
+    <script>
+
+        var loader = setInterval(function () {
+            if (document.readyState !== "complete") return;
+                clearInterval(loader);
+
+            //inside of this, use $
+            $("#hola").datepicker();
+
+         }, 300);
+
+
+        function getFullError() {
+            var error = {
+                ErrorMessage: $("#ErrorMessage3").html(),
+                Controller: $("#ErrorMessage2").html(),
+                Action: $("#ErrorMessage1").html(),
+                dateTime: $("#ErrorMessage4").html(),
+            }
+                
+            console.log(error);
+        }
+
+        function getStackTrace() {
+            console.log($("#ErrorMessage5").html());
+        }
+
+        function getErrorMessage() {
+            console.log($("#ErrorMessage3").html());
+        }
+
+        console.log("getFullError, getStackTrace, getErrorMessage");
+    </script>
 </body>
 </html>

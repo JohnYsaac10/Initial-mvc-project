@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlnckProyect.Infrastructure.JsonConfig;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -8,7 +9,7 @@ namespace BlnckProyect.Infrastructure.Helpers
 {
     public static class Extentions
     {
-        public static string maskEmail(this string correo)
+        public static string MaskEmail(this string correo)
         {
             if (string.IsNullOrEmpty(correo))
                 return string.Empty;
@@ -17,7 +18,7 @@ namespace BlnckProyect.Infrastructure.Helpers
             return result;
         }
 
-        public static string maskMobile(this string mobile)
+        public static string MaskMobile(this string mobile)
         {
             int startIndex = 3; string mask = "****";
             if (string.IsNullOrEmpty(mobile))
@@ -39,7 +40,10 @@ namespace BlnckProyect.Infrastructure.Helpers
             return result;
         }
     
-        
+        public static ErrorMessage GetError(this ApplicationSettings settings, int statusCode)
+        {
+            return settings.ErrorMessages.FirstOrDefault(elem => elem.code == statusCode);
+        }
 
     }
 }

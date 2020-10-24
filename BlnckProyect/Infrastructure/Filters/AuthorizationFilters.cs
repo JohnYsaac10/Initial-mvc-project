@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlnckProyect.Models.ErrorHandler;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -37,7 +38,7 @@ namespace BlnckProyect.Infrastructure.Filters
                 {
                     filterContext.Result = new JsonResult
                     {
-                        Data = new { codError = "405", mensaje = "El sitio ha rechazado tu petición" }
+                        Data = new { error =  new { code = "405", message = "El sitio ha rechazado tu petición" } }
                     };
                 }
 
@@ -106,22 +107,23 @@ namespace BlnckProyect.Infrastructure.Filters
     //potect http method by role
     public class AllowedRolesAttribute : AuthorizeAttribute
     {
-        private string UseAFT;
+        public string UseAFT { get; set; } = "YES";
         private readonly string[] allowedroles;
         string httpVerb = HttpContext.Current.Request.HttpMethod.ToUpper();
-        public AllowedRolesAttribute(string userAFT = "Yes", params string[] roles)
+        public AllowedRolesAttribute(params string[] roles)
         {
             this.allowedroles = roles;
-            UseAFT = userAFT;
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             var userId = Convert.ToString(httpContext.Session["SessionName"]);
             //convert to class
-            return Array.Exists(allowedroles, x => x == "SessionClass.role");
+            if(allowedroles != null && allowedroles.Length > 0)
+                return Array.Exists(allowedroles, x => x == "SessionClass.role");
+            return true;
         }
-
+        
         public override void  OnAuthorization(AuthorizationContext filterContext)
         {
             if (filterContext == null)
@@ -131,7 +133,7 @@ namespace BlnckProyect.Infrastructure.Filters
 
             var httpContext = filterContext.HttpContext;
 
-            if (UseAFT.Equals("yes", StringComparison.InvariantCultureIgnoreCase))
+            if (UseAFT.ToUpper() == "YES" && httpVerb == "POST")
                 try
                 {
                     var cookie = httpContext.Request.Cookies[AntiForgeryConfig.CookieName];
@@ -141,7 +143,7 @@ namespace BlnckProyect.Infrastructure.Filters
                 {
                     filterContext.Result = new JsonResult
                     {
-                        Data = new { codError = "405", mensaje = "El sitio ha rechazado tu petición" }
+                        Data = new { error = new { code = "405", message = "El sitio ha rechazado tu petición" } }
                     };
                 }
         }
@@ -157,7 +159,7 @@ namespace BlnckProyect.Infrastructure.Filters
             else
                 filterContext.Result = new JsonResult
                 {
-                    Data = new { codError = "401", mensaje = "No tienes los permisos necesarios" }
+                    Data = new {   error = new { code = "401", message = "No tienes los permisos necesarios" } }
                 };
         }
     }

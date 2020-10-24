@@ -1,21 +1,20 @@
 ﻿using AutoMapper;
 using BlnckProyect.Infrastructure.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using BlnckProyect.Infrastructure.JsonConfig;
 using System.Web.Mvc;
 
 namespace BlnckProyect.Controllers
 {
-    [Authentication]
+    [ExceptionHandlerFilter]
+    //[Authentication]
     public class ExampleController : Controller
     {
-
+        private readonly ApplicationSettings _settings;
         private readonly IMapper _mapper;
-        public ExampleController(IMapper mapper)
+        public ExampleController(IMapper mapper, EnvModeSettingsManager settings)
         {
             _mapper = mapper;
+            _settings = settings.Config;
         }
         // GET: Example
         public ActionResult Index()
@@ -23,13 +22,19 @@ namespace BlnckProyect.Controllers
             return View();
         }
 
-        [HttpPost]
+        //[HttpPost]
         //[AllowedRoles("Admin", "SuperAdmin")]
         //[ProtectPost]
         public ActionResult Usuarios()
         {
             //ModelState.IsValid
-            return null;
+            return View("Example");
+        }
+
+        [AllowedRoles("Admin", "SuperAdmin")]
+        public ActionResult Hola(string data)
+        {
+            return Json(new { Data = "it's ok" });
         }
     }
 }

@@ -14,7 +14,6 @@ namespace BlnckProyect
                         "~/Assets/ThirdPartyLib/bootstrap/bootstrap.min.js",
                         "~/Assets/ThirdPartyLib/bootstrap-select/bootstrap-select.min.js",
                         "~/Assets/ThirdPartyLib/bootstrap-select/defaults-es_ES.min.js",
-                        "~/Assets/ThirdPartyLib/datepicker/jquery-ui.min.js",
                         "~/Assets/ThirdPartyLib/alertify/alertify.min.js"));
 
             bundles.Add(new StyleBundle("~/bundles/themes").Include(
