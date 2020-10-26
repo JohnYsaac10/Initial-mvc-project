@@ -1,0 +1,14 @@
+﻿@model Int32
+@{
+    ViewBag.Title = "Detallles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @if(Model == 404)
+    {
+        var message = "Uppps.. pagina no encontrada";
+    }
+</div>
+<h2>Detallles</h2>
+
